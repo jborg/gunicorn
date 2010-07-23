@@ -5,6 +5,9 @@
 
 
 import os
+
+from distribute_setup import use_setuptools
+use_setuptools()
 from setuptools import setup, find_packages
 
 from gunicorn import __version__
@@ -40,8 +43,6 @@ setup(
     zip_safe = False,
     packages = find_packages(exclude=['examples', 'tests']),
     include_package_data = True,
-    
-    install_requires=['setuptools'],
 
     entry_points="""
     

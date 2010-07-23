@@ -4,6 +4,7 @@ include NOTICE
 include README.rst
 include THANKS
 include gunicorn/options.ini
+include distribute_setup.py
 recursive-include tests *
 recursive-include examples *
 recursive-include doc *
