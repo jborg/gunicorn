@@ -8,6 +8,7 @@ from __future__ import with_statement
 import errno
 import logging
 import os
+import random
 import select
 import signal
 import sys
@@ -426,7 +427,8 @@ class Arbiter(object):
         if pid != 0:
             self.WORKERS[pid] = worker
             return
-
+        # Make sure each worker gets a new random seed
+        random.seed()
         # Process Child
         worker_pid = os.getpid()
         try:
