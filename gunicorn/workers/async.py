@@ -59,6 +59,11 @@ class AsyncWorker(base.Worker):
             return
         finally:
             util.close(client)
+            self.nr += 1
+            if self.nr == self.max_requests:
+                self.log.info("Restarting worker after %s requests",
+                    self.max_requests)
+                self.alive = False
 
     def handle_request(self, req, sock, addr):
         try:

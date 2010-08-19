@@ -107,6 +107,10 @@ class Config(object):
         else:
             return self.settings['default_proc_name']
             
+    @property
+    def max_requests(self):
+        return self.settings['max_requests'].get()
+
 class SettingMeta(type):
     def __new__(cls, name, bases, attrs):
         super_new = super(SettingMeta, cls).__new__
@@ -272,6 +276,23 @@ class Workers(Setting):
         A positive integer generally in the 2-4 x $(NUM_CORES) range. You'll
         want to vary this a bit to find the best for your particular
         application's work load.
+        """
+
+class MaxRequests(Setting):
+    name = "max_requests"
+    section = "Worker Processes"
+    cli = ["-M", "--max-requests"]
+    meta = "INT"
+    validator = validate_pos_int
+    type = "int"
+    default = 0
+    desc = """\
+        Maximum number of requests a worker should process before it is restarted
+        
+        A positive integer can be used to limit the amount of memory a worker
+        process can consume due to memory leaks.
+
+        If this number is 0 the worker will be persistent.
         """
 
 class WorkerClass(Setting):
